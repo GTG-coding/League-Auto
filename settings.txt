@@ -3,8 +3,8 @@ League Auto Accept Client Settings
 [EITHER ON OR OFF FOR THE FOLLOWING SETTINGS]
 AUTO ACCEPT:       'ON' [automatically accepts games invites]
 AUTO START GAME:   'OFF' [automatically starts the game and begins searching]
-AUTO BAN: 	   'ON' [automatically bans champs during banning phase]
-AUTO CHAMP SELECT: 'ON' [automatically selects champs]
+AUTO BAN: 	   'OFF' [automatically bans champs during banning phase]
+AUTO CHAMP SELECT: 'OFF' [automatically selects champs]
 
 
 [FOLLOW INSTRUCTIONS ON RIGHT]

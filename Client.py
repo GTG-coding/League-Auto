@@ -28,16 +28,31 @@ def ghostclick(imgname): #Does a invisible click
 
 def auto_accept(): #auto accepts games
     accepted = False
-    while keyboard.is_pressed('q') == False:
+    ingame = False
+    inchampselect = False
+    
+    while ingame == False:
         time.sleep(1)
-        if accepted == False:
-          #  print('Looking for accept title..')
-           # if locate('accepttitle'):
-            #    print('Found accept title!')
+        if locate('inmenu') and accepted == True: ##checks to see if player is in menu after accept
+            print('player is back in menu, resetting')
+            accepted = False
+            ingame = False
+            inchampselect = False
+        elif accepted == False: ##checks for accept button
             print('Looking for accept button..')
             if locate('accept'):
                 ghostclick('accept')
-                break #currently is the way of stopping the print spam
+                accepted = True
+        elif inchampselect == False and accepted == True: ##checks to see if player is in champ select
+            print('Ensuring player reaches champ select phase')
+            if locate('champmenu'):
+                print('player is now in champ select')
+                inchampselect = True
+        elif ingame == False and inchampselect == True: ##checks to see if player is in game
+            print('Ensuring player reaches game phase')
+            if locate('ingame'):
+                print('player is now in game')
+                ingame = True
 
 def selectlane(givenlane): #selects lanes
     mousepos = pyautogui.position()
@@ -255,10 +270,14 @@ t4 = threading.Thread(target=champ_pick,args=(champ1,champ2))
 
 #checks the settings for on/off
 if t_aa == "ON":
-    t1.start() #auto accept
+    auto_accept() #auto accept
 if t_start == "ON":
     t2.start() #start game
 if t_ban == "ON":
     t3.start() #ban pick
 if t_champselect == "ON":
     t4.start() #champ pick
+
+
+#TO DO#
+#ensure player reaches game phase, currently in the works of doing this
