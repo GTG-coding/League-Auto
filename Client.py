@@ -233,7 +233,7 @@ if sameversion == True:
     print(f'Version: {version} | UP TO DATE')
 elif sameversion == False:
     print(f'Version: {version} | OUTDATED, UPDATE AT: {url}')
-print('League Auto Accept PLUS | Support me here: https://www.paypal.com/paypalme/c1ose | ENJOY')
+print('League-Auto | ENJOY')
 print(' ')
 print('TOGGLES:')
 print(f'Auto accept: {t_aa} | Auto start: {t_start} | Auto Ban: {t_ban} | Auto champ select: {t_champselect}')
