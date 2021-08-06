@@ -6,7 +6,8 @@ import pyautogui #not default
 import time
 import keyboard #not default
 import os, threading
-#import win32gui
+from win32gui import FindWindow, GetWindowRect #not default
+import sys
 
 dirpath = os.path.dirname(os.path.abspath(__file__))
 champselected = False
@@ -169,6 +170,22 @@ for stuff in content:
     if stuff == '':
         content.remove(stuff)
 
+#checking if client size is 1600 x 900
+league_client = FindWindow(None, 'League of Legends')
+window_size = GetWindowRect(league_client)
+realwindowsize = ''
+realwindowsize = str(window_size[2] - window_size[0])
+realwindowsize += ' x ' + str(window_size[3] - window_size[1])
+if realwindowsize != '1600 x 900':
+    print(f'Window size is {realwindowsize}')
+    print(f'Window size MUST BE 1600 x 900')
+    print(f'Please change window size in the league client settings to 1600 x 900')
+    timer = 10
+    while timer != 0:
+        print(f'client will close in {timer}')
+        timer -= 1
+        time.sleep(1)
+    sys.exit()
 
 #settings organizer which is chosen by the symbol: '
 t_aa = content[0]
@@ -191,15 +208,6 @@ print('PREFERENCES:')
 print(f'Champs: {champ1},{champ2} | Bans: {ban}')
 print(' ')
 print('OUTPUT:')
-
-#window_title = 'League of Legends'
-#hwnd = win32gui.FindWindow(None, window_title)
-#win32gui.SetForegroundWindow(hwnd)
-
-
-#starting the engines
-t3 = threading.Thread(target=ban_pick,args=(ban))
-t4 = threading.Thread(target=champ_pick,args=(champ1,champ2))
 
 #checks the settings for on/off
 autoaccept = False
