@@ -1,4 +1,4 @@
-version = 'v1.1'
+version = 'v1.2'
 
 import requests #not default
 from bs4 import BeautifulSoup #not default
