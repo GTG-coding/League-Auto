@@ -1,4 +1,4 @@
-version = 'v1.1'
+version = 'v1.0'
 
 import requests #not default
 from bs4 import BeautifulSoup #not default
@@ -26,13 +26,12 @@ def ghostclick(imgname): #Does a invisible click
     pyautogui.click(x,y)
     pyautogui.moveTo(mousepos)
 
-def auto_accept(): #auto accepts games
+def main(autoaccept,autoban,autochamppick,ban,champ1,champ2): #the main function, does it all
     accepted = False
     ingame = False
     inchampselect = False
     
     while ingame == False:
-        time.sleep(1)
         if locate('inmenu') and accepted == True: ##checks to see if player is in menu after accept
             print('player is back in menu, resetting')
             accepted = False
@@ -48,88 +47,24 @@ def auto_accept(): #auto accepts games
             if locate('champmenu'):
                 print('player is now in champ select')
                 inchampselect = True
+            if autoban == True and inchampselect == True:
+                ban_pick(ban)
+            if autochamppick == True and inchampselect == True:
+                champ_pick(champ1,champ2)
         elif ingame == False and inchampselect == True: ##checks to see if player is in game
             print('Ensuring player reaches game phase')
             if locate('ingame'):
                 print('player is now in game')
                 ingame = True
 
-def selectlane(givenlane): #selects lanes
-    mousepos = pyautogui.position()
-    if givenlane == 'MID':
-        pyautogui.move(0,-90)
-        pyautogui.click()
-    if givenlane == 'JUNGLE':
-        pyautogui.move(-70,-75)
-        pyautogui.click()
-    if givenlane == 'TOP':
-        pyautogui.move(-90,0)
-        pyautogui.click()
-    if givenlane == 'ADC':
-        pyautogui.move(70,-75)
-        pyautogui.click()
-    if givenlane == 'SUPPORT':
-        pyautogui.move(90,0)
-        pyautogui.click()
-
-    pyautogui.moveTo(mousepos)
-
-def startgame(firstlane,secondlane): #starts games
-    print('Started Thread')
-    while keyboard.is_pressed('q') == False:
-        print('Loop beginning..')
-
-        if locate('mainplay'):
-            print('Mainplay was located')
-            ghostclick('mainplay')
-            continue
-
-        #time.sleep(1.5)
-
-        if locate('rankedcheck'):
-            print('Checkbox was located')
-            ghostclick('rankedcheck')
-            continue
-
-        if locate('quesubmit'):
-            print('Beginning queue..')
-            ghostclick('quesubmit')
-            continue
-
-        #time.sleep(2)
-
-        if locate('partylabel'):
-            print('in party')
-
-            if locate('laneselect'):
-                pyautogui.click(locate('laneselect'))
-                time.sleep(1)
-                selectlane(firstlane)
-                continue
-
-        #time.sleep(2)
-
-        if locate('laneselect2'):
-            print("located 2")
-            pyautogui.click(locate('laneselect2'))
-            time.sleep(1)
-            selectlane(secondlane)
-            continue
-
-        #time.sleep(2)
-
-        if locate('quesearch'):
-            pyautogui.click(locate('quesearch'))
-            print('Started Game.')
-            continue
-
-    print('Loop stopped..')
-
 def ban_pick(ban): #bans picks
     champbanned = False    
-    while keyboard.is_pressed('q') == False:
-        time.sleep(1)
-        if champbanned == False:
+    while champbanned == False:
+        if locate('inmenu'): ##checks to see if player is in menu after accept
+            print('player is back in menu, resetting')
+            break
+            ##add reset here
+        elif champbanned == False:
             print("Checking for banning phase...")
             if locate('banchamplabel'):
                 print("Banning phase started, finding search bar...")
@@ -149,14 +84,17 @@ def ban_pick(ban): #bans picks
 
 def champ_pick(champ1,champ2): #chooses picks
     champselected = False
-    while keyboard.is_pressed('q') == False:
-        time.sleep(1)
-        if champselected == False:
+    while champselected == False:
+        if locate('inmenu'):
+            print('player is back in menu, resetting')
+            break
+            ##add reset here
+        elif champselected == False:
             print("Checking for champ selection phase...")
             if locate('selectchamplabel'):
                 print("Champ selection started, finding search bar...")
                 if locate('champsearch2'):               #champsearch is transparent, need another image
-                    print("Found searchbar, typing ban choice..")
+                    print("Found searchbar, typing champ pick choice..")
                     pyautogui.click(locate('champsearch2'))
                     pyautogui.write(champ1)
                     pyautogui.move(-460,60)
@@ -234,14 +172,11 @@ for stuff in content:
 
 #settings organizer which is chosen by the symbol: '
 t_aa = content[0]
-t_start = content[1]
-t_ban = content[2]
-t_champselect = content[3]
-lane1 = content[4]
-lane2 = content[5]
-champ1 = content[6]
-champ2 = content[7]
-ban = content[8]
+t_ban = content[1]
+t_champselect = content[2]
+champ1 = content[3]
+champ2 = content[4]
+ban = content[5]
 
 #prints
 if sameversion == True:
@@ -251,9 +186,9 @@ elif sameversion == False:
 print('League-Auto | ENJOY')
 print(' ')
 print('TOGGLES:')
-print(f'Auto accept: {t_aa} | Auto start: {t_start} | Auto Ban: {t_ban} | Auto champ select: {t_champselect}')
+print(f'Auto accept: {t_aa} | Auto Ban: {t_ban} | Auto champ select: {t_champselect}')
 print('PREFERENCES:')
-print(f'Lanes: {lane1},{lane2} | Champs: {champ1},{champ2} | Bans: {ban}')
+print(f'Champs: {champ1},{champ2} | Bans: {ban}')
 print(' ')
 print('OUTPUT:')
 
@@ -263,21 +198,24 @@ print('OUTPUT:')
 
 
 #starting the engines
-t1 = threading.Thread(target=auto_accept)
-t2 = threading.Thread(target=startgame,args=(lane1,lane2))
-t3 = threading.Thread(target=ban_pick,args=([ban]))
+t3 = threading.Thread(target=ban_pick,args=(ban))
 t4 = threading.Thread(target=champ_pick,args=(champ1,champ2))
 
 #checks the settings for on/off
+autoaccept = False
+autoban = False
+autochamppick = False
 if t_aa == "ON":
-    auto_accept() #auto accept
-if t_start == "ON":
-    t2.start() #start game
+    autoaccept = True #auto accept
 if t_ban == "ON":
-    t3.start() #ban pick
+    autoban = True #ban pick
 if t_champselect == "ON":
-    t4.start() #champ pick
+    autochamppick = True #champ pick
+
+main(autoaccept,autoban,autochamppick,ban,champ1,champ1)
 
 
 #TO DO#
-#ensure player reaches game phase, currently in the works of doing this
+#fix the autoban and autochamppick:
+ #ensure code doesnt get stuck anywhere if someone dodges during a part
+ 
