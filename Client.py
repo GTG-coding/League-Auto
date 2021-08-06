@@ -59,7 +59,8 @@ def main(autoaccept,autoban,autochamppick,ban,champ1,champ2): #the main function
                 ingame = True
 
 def ban_pick(ban): #bans picks
-    champbanned = False    
+    champbanned = False
+    champclicked = False    
     while champbanned == False:
         if locate('inmenu'): ##checks to see if player is in menu after accept
             print('player is back in menu, resetting')
@@ -67,7 +68,7 @@ def ban_pick(ban): #bans picks
             ##add reset here
         elif champbanned == False:
             print("Checking for banning phase...")
-            if locate('banchamplabel'):
+            if locate('banchamplabel') and champclicked == False:
                 print("Banning phase started, finding search bar...")
                 if locate('bansearch2'):
                     print("found searchbar, typing ban choice")
@@ -75,16 +76,18 @@ def ban_pick(ban): #bans picks
                     pyautogui.write(ban)
                     pyautogui.move(-460,60)
                     time.sleep(0.1)
-                    pyautogui.click()          
+                    pyautogui.click()
+                    champclicked = True
                     time.sleep(0.1)
-                if locate('bansubmit'):
-                    pyautogui.click(locate("bansubmit"))
-                    print('Champion banned!')
-                    champbanned = True #currently is the way of stopping the print spam
-                    break
+            elif locate('bansubmit') and champclicked == True:
+                pyautogui.click(locate("bansubmit"))
+                print('Champion banned!')
+                champbanned = True #currently is the way of stopping the print spam
+                break
 
 def champ_pick(champ1,champ2): #chooses picks
     champselected = False
+    champclicked = False
     while champselected == False:
         if locate('inmenu'):
             print('player is back in menu, resetting')
@@ -92,7 +95,7 @@ def champ_pick(champ1,champ2): #chooses picks
             ##add reset here
         elif champselected == False:
             print("Checking for champ selection phase...")
-            if locate('selectchamplabel'):
+            if locate('selectchamplabel') and champclicked == False:
                 print("Champ selection started, finding search bar...")
                 if locate('champsearch2'):               #champsearch is transparent, need another image
                     print("Found searchbar, typing champ pick choice..")
@@ -101,8 +104,9 @@ def champ_pick(champ1,champ2): #chooses picks
                     pyautogui.move(-460,60)
                     time.sleep(0.1)
                     pyautogui.click()
+                    champclicked = True
                     time.sleep(0.1)
-            if locate('selectchamp'):
+            elif locate('selectchamp') and champclicked == True:
                 pyautogui.click(locate('selectchamp'))
                 print("Champion selected!")
                 champselected = True #currently is the way of stopping the print spam
@@ -171,22 +175,30 @@ for stuff in content:
         content.remove(stuff)
 
 #checking if client size is 1600 x 900
-league_client = FindWindow(None, 'League of Legends')
-window_size = GetWindowRect(league_client)
-realwindowsize = ''
-realwindowsize = str(window_size[2] - window_size[0])
-realwindowsize += ' x ' + str(window_size[3] - window_size[1])
-if realwindowsize != '1600 x 900':
-    print(f'Window size is {realwindowsize}')
-    print(f'Window size MUST BE 1600 x 900')
-    print(f'Please change window size in the league client settings to 1600 x 900')
+if FindWindow(None, 'League of Legends'):
+    league_client = FindWindow(None, 'League of Legends')
+    window_size = GetWindowRect(league_client)
+    realwindowsize = ''
+    realwindowsize = str(window_size[2] - window_size[0])
+    realwindowsize += ' x ' + str(window_size[3] - window_size[1])
+    if realwindowsize != '1600 x 900':
+        print(f'Window size is {realwindowsize}')
+        print(f'Window size MUST BE 1600 x 900')
+        print(f'Please change window size in the league client settings to 1600 x 900')
+        timer = 10
+        while timer != 0:
+            print(f'client will close in {timer}')
+            timer -= 1
+            time.sleep(1)
+        sys.exit()
+else:
+    print('Client is not opened, please open league before running the client')
     timer = 10
     while timer != 0:
         print(f'client will close in {timer}')
         timer -= 1
         time.sleep(1)
     sys.exit()
-
 #settings organizer which is chosen by the symbol: '
 t_aa = content[0]
 t_ban = content[1]
