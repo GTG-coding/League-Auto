@@ -1,4 +1,4 @@
-version = 'v1.3'
+version = 'v1.4'
 
 import requests #not default
 from bs4 import BeautifulSoup #not default
@@ -184,7 +184,9 @@ if FindWindow(None, 'League of Legends'):
     if realwindowsize != '1600 x 900':
         print(f'Window size is {realwindowsize}')
         print(f'Window size MUST BE 1600 x 900')
+        print(' ')
         print(f'Please change window size in the league client settings to 1600 x 900')
+        print(' ')
         timer = 10
         while timer != 0:
             print(f'client will close in {timer}')
@@ -192,13 +194,15 @@ if FindWindow(None, 'League of Legends'):
             time.sleep(1)
         sys.exit()
 else:
-    print('Client is not opened, please open league before running the client')
-    timer = 10
+    print('League of legends is not opened, please open league before running the client')
+    print(' ')
+    timer = 5
     while timer != 0:
         print(f'client will close in {timer}')
         timer -= 1
         time.sleep(1)
     sys.exit()
+
 #settings organizer which is chosen by the symbol: '
 t_aa = content[0]
 t_ban = content[1]
