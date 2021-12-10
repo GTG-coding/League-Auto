@@ -1,0 +1,12 @@
+League Auto Accept Client Settings
+
+[EITHER ON OR OFF FOR THE FOLLOWING SETTINGS]
+AUTO ACCEPT:       'ON' [automatically accepts games invites]
+AUTO BAN: 	   'OFF' [automatically bans champs during banning phase]
+AUTO CHAMP SELECT: 'OFF' [automatically selects champs]
+
+
+[FOLLOW INSTRUCTIONS ON RIGHT]
+champ1: 'QIYANA' [ENTER CHAMPION NAME EXACTLY AS SPELT] **this champion is only selected so far**
+champ2: 'CAMILLE' [ENTER CHAMPION NAME EXACTLY AS SPELT]
+ban:	'VOLIBEAR' [ENTER CHAMPION NAME EXACTLY AS SPELT]

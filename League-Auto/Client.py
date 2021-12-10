@@ -214,14 +214,11 @@ champ2 = content[4]
 ban = content[5]
 
 #prints
-#version checker bugged fix sometime
-"""
 if sameversion == True:
     print(f'Version: {version} | UP TO DATE')
 elif sameversion == False:
     print(f'Version: {version} | OUTDATED, UPDATE AT: {url}')
-"""
-print(f'League-Auto | ENJOY | Version: {version}')
+print('League-Auto | ENJOY')
 print(' ')
 print('TOGGLES:')
 print(f'Auto accept: {t_aa} | Auto Ban: {t_ban} | Auto champ select: {t_champselect}')
