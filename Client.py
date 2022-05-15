@@ -19,9 +19,9 @@ def img(imgname): #retruns full imgs path
 def locate(imgname, conf): #locate the given img x,y
     imgfolder = dirpath + '\\buttons\\'
     fullpath = imgfolder + imgname + '.png'
-    return pyautogui.locateCenterOnScreen(fullpath, conf)
+    return pyautogui.locateCenterOnScreen(fullpath, confidence=conf)
 
-def ghostclick(imgname , conf): #Does a invisible click
+def ghostclick(imgname, conf): #Does a invisible click
     x,y = locate(imgname, conf)
     mousepos = pyautogui.position()
     pyautogui.click(x,y)
@@ -156,10 +156,11 @@ if getversion == version:
 else:
     sameversion = False
 """
+
 #checking the settings
 toggle = False
 content = ""
-settings = open("settings.txt","r+")
+settings = open(dirpath + "\\settings.txt","r+")
 for lines in settings:
     for letter in lines:
         if toggle == True and not letter == "'":
