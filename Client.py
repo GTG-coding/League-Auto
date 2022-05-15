@@ -16,13 +16,13 @@ def img(imgname): #retruns full imgs path
     imgfolder = dirpath + '\\buttons\\'
     return imgfolder + imgname
 
-def locate(imgname): #locate the given img x,y
+def locate(imgname, conf): #locate the given img x,y
     imgfolder = dirpath + '\\buttons\\'
     fullpath = imgfolder + imgname + '.png'
-    return pyautogui.locateCenterOnScreen(fullpath)
+    return pyautogui.locateCenterOnScreen(fullpath, conf)
 
-def ghostclick(imgname): #Does a invisible click
-    x,y = locate(imgname)
+def ghostclick(imgname , conf): #Does a invisible click
+    x,y = locate(imgname, conf)
     mousepos = pyautogui.position()
     pyautogui.click(x,y)
     pyautogui.moveTo(mousepos)
@@ -33,19 +33,19 @@ def main(autoaccept,autoban,autochamppick,ban,champ1,champ2): #the main function
     inchampselect = False
     
     while ingame == False:
-        if locate('inmenu') and accepted == True: ##checks to see if player is in menu after accept
+        if locate('inmenu', 0.9) and accepted == True: ##checks to see if player is in menu after accept
             print('player is back in menu, resetting')
             accepted = False
             ingame = False
             inchampselect = False
         elif accepted == False: ##checks for accept button
             print('Looking for accept button..')
-            if locate('accept'):
-                ghostclick('accept')
+            if locate('accept', 0.9):
+                ghostclick('accept', 0.9)
                 accepted = True
         elif inchampselect == False and accepted == True: ##checks to see if player is in champ select
             print('Ensuring player reaches champ select phase')
-            if locate('champmenu'):
+            if locate('champmenu', 0.9):
                 print('player is now in champ select')
                 inchampselect = True
             if autoban == True and inchampselect == True:
@@ -54,7 +54,7 @@ def main(autoaccept,autoban,autochamppick,ban,champ1,champ2): #the main function
                 champ_pick(champ1,champ2)
         elif ingame == False and inchampselect == True: ##checks to see if player is in game
             print('Ensuring player reaches game phase')
-            if locate('ingame'):
+            if locate('ingame', 0.9):
                 print('player is now in game')
                 ingame = True
 
@@ -62,25 +62,25 @@ def ban_pick(ban): #bans picks
     champbanned = False
     champclicked = False    
     while champbanned == False:
-        if locate('inmenu'): ##checks to see if player is in menu after accept
+        if locate('inmenu', 0.9): ##checks to see if player is in menu after accept
             print('player is back in menu, resetting')
             break
             ##add reset here
         elif champbanned == False:
             print("Checking for banning phase...")
-            if locate('banchamplabel') and champclicked == False:
+            if locate('banchamplabel', 0.9) and champclicked == False:
                 print("Banning phase started, finding search bar...")
-                if locate('bansearch2'):
+                if locate('bansearch2', 0.9):
                     print("found searchbar, typing ban choice")
-                    pyautogui.click(locate('bansearch2'))
+                    pyautogui.click(locate('bansearch2', 0.9))
                     pyautogui.write(ban)
                     pyautogui.move(-460,60)
                     time.sleep(0.1)
                     pyautogui.click()
                     champclicked = True
                     time.sleep(0.1)
-            elif locate('bansubmit') and champclicked == True:
-                pyautogui.click(locate("bansubmit"))
+            elif locate('bansubmit', 0.9) and champclicked == True:
+                pyautogui.click(locate("bansubmit", 0.9))
                 print('Champion banned!')
                 champbanned = True #currently is the way of stopping the print spam
                 break
@@ -89,25 +89,25 @@ def champ_pick(champ1,champ2): #chooses picks
     champselected = False
     champclicked = False
     while champselected == False:
-        if locate('inmenu'):
+        if locate('inmenu', 0.9):
             print('player is back in menu, resetting')
             break
             ##add reset here
         elif champselected == False:
             print("Checking for champ selection phase...")
-            if locate('selectchamplabel') and champclicked == False:
+            if locate('selectchamplabel', 0.9) and champclicked == False:
                 print("Champ selection started, finding search bar...")
-                if locate('champsearch2'):               #champsearch is transparent, need another image
+                if locate('champsearch2', 0.9):               #champsearch is transparent, need another image
                     print("Found searchbar, typing champ pick choice..")
-                    pyautogui.click(locate('champsearch2'))
+                    pyautogui.click(locate('champsearch2', 0.9))
                     pyautogui.write(champ1)
                     pyautogui.move(-460,60)
                     time.sleep(0.1)
                     pyautogui.click()
                     champclicked = True
                     time.sleep(0.1)
-            elif locate('selectchamp') and champclicked == True:
-                pyautogui.click(locate('selectchamp'))
+            elif locate('selectchamp', 0.9) and champclicked == True:
+                pyautogui.click(locate('selectchamp', 0.9))
                 print("Champion selected!")
                 champselected = True #currently is the way of stopping the print spam
                 break
