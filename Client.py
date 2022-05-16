@@ -85,31 +85,34 @@ def main(autoaccept,autoban,autochamppick,ban,champ1,champ2): #the main function
     ingame = False
     inchampselect = False
     
-    while ingame == False:
-        if locate('inmenu', 0.9) and accepted == True: ##checks to see if player is in menu after accept
-            print('player is back in menu, resetting')
-            accepted = False
-            ingame = False
-            inchampselect = False
-        elif accepted == False: ##checks for accept button
-            print('Looking for accept button..')
-            if locate('accept', 0.9):
-                ghostclick('accept', 0.9)
-                accepted = True
-        elif inchampselect == False and accepted == True: ##checks to see if player is in champ select
-            print('Ensuring player reaches champ select phase')
-            if locate('champmenu', 0.9):
-                print('player is now in champ select')
-                inchampselect = True
-            if autoban == True and inchampselect == True:
+    if autoaccept == True:
+        while ingame == False:
+            if locate('inmenu', 0.9) and accepted == True: ##checks to see if player is in menu after accept
+                print('player is back in menu, resetting')
+                accepted = False
+                ingame = False
+                inchampselect = False
+            elif accepted == False: ##checks for accept button
+                print('Looking for accept button..')
+                if locate('accept', 0.9):
+                    ghostclick('accept', 0.9)
+                    accepted = True
+            elif inchampselect == False and accepted == True: ##checks to see if player is in champ select
+                print('Ensuring player reaches champ select phase')
+                if locate('champmenu', 0.9):
+                    print('player is now in champ select')
+                    inchampselect = True
+            elif ingame == False and inchampselect == True: ##checks to see if player is in game
+                print('Ensuring player reaches game phase')
+                if locate('ingame', 0.9):
+                    print('player is now in game')
+                    ingame = True
+
+'''if autoban == True and inchampselect == True:
                 ban_pick(ban)
             if autochamppick == True and inchampselect == True:
                 champ_pick(champ1,champ2)
-        elif ingame == False and inchampselect == True: ##checks to see if player is in game
-            print('Ensuring player reaches game phase')
-            if locate('ingame', 0.9):
-                print('player is now in game')
-                ingame = True
+                '''
 
 #checking if client is up to date
 getversion = ""
@@ -241,4 +244,5 @@ main(autoaccept,autoban,autochamppick,ban,champ1,champ1)
 #TO DO#
 #fix the autoban and autochamppick:
  #ensure code doesnt get stuck anywhere if someone dodges during a part
+ #allow for auto accept to be off and auto champ select/ban select be on
  
