@@ -3,6 +3,6 @@ keyboard==0.13.5
 Pillow==9.1.0
 beautifulsoup4==4.9.3
 requests==2.25.1
-pywin32==301
+pywin32==304
 opencv-python==4.5.5.64
 PyScreeze==0.1.28
