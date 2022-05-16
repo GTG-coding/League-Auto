@@ -168,11 +168,11 @@ for lines in settings:
         elif letter == "'" and toggle == False:
             toggle = True
         elif letter == "'" and toggle == True:
-            content += " "
+            content += "|"
             toggle = False
 settings.close()
 
-content = content.split(" ")            
+content = content.split("|")            
 for stuff in content:
     if stuff == '':
         content.remove(stuff)
