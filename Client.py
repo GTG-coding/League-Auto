@@ -1,11 +1,11 @@
-version = 'v1.6'
+version = 'v1.7'
 
 import requests #not default
 from bs4 import BeautifulSoup #not default
 import pyautogui #not default
 import time
 import keyboard #not default
-import os, threading
+import os
 from win32gui import FindWindow, GetWindowRect #not default
 import sys
 
@@ -26,38 +26,6 @@ def ghostclick(imgname, conf): #Does a invisible click
     mousepos = pyautogui.position()
     pyautogui.click(x,y)
     pyautogui.moveTo(mousepos)
-
-def main(autoaccept,autoban,autochamppick,ban,champ1,champ2): #the main function, does it all
-    accepted = False
-    ingame = False
-    inchampselect = False
-    
-    while ingame == False:
-        if locate('inmenu', 0.9) and accepted == True: ##checks to see if player is in menu after accept
-            print('player is back in menu, resetting')
-            accepted = False
-            ingame = False
-            inchampselect = False
-        elif accepted == False: ##checks for accept button
-            print('Looking for accept button..')
-            if locate('accept', 0.9):
-                ghostclick('accept', 0.9)
-                accepted = True
-        elif inchampselect == False and accepted == True: ##checks to see if player is in champ select
-            print('Ensuring player reaches champ select phase')
-            if locate('champmenu', 0.9):
-                print('player is now in champ select')
-                inchampselect = True
-            if autoban == True and inchampselect == True:
-                ban_pick(ban)
-            if autochamppick == True and inchampselect == True:
-                champ_pick(champ1,champ2)
-        elif ingame == False and inchampselect == True: ##checks to see if player is in game
-            print('Ensuring player reaches game phase')
-            if locate('ingame', 0.9):
-                print('player is now in game')
-                ingame = True
-
 def ban_pick(ban): #bans picks
     champbanned = False
     champclicked = False    
@@ -112,15 +80,43 @@ def champ_pick(champ1,champ2): #chooses picks
                 champselected = True #currently is the way of stopping the print spam
                 break
 
-#CHECKVERSION IS BROKEN FIX SOMETIME
-"""
+def main(autoaccept,autoban,autochamppick,ban,champ1,champ2): #the main function, does it all
+    accepted = False
+    ingame = False
+    inchampselect = False
+    
+    while ingame == False:
+        if locate('inmenu', 0.9) and accepted == True: ##checks to see if player is in menu after accept
+            print('player is back in menu, resetting')
+            accepted = False
+            ingame = False
+            inchampselect = False
+        elif accepted == False: ##checks for accept button
+            print('Looking for accept button..')
+            if locate('accept', 0.9):
+                ghostclick('accept', 0.9)
+                accepted = True
+        elif inchampselect == False and accepted == True: ##checks to see if player is in champ select
+            print('Ensuring player reaches champ select phase')
+            if locate('champmenu', 0.9):
+                print('player is now in champ select')
+                inchampselect = True
+            if autoban == True and inchampselect == True:
+                ban_pick(ban)
+            if autochamppick == True and inchampselect == True:
+                champ_pick(champ1,champ2)
+        elif ingame == False and inchampselect == True: ##checks to see if player is in game
+            print('Ensuring player reaches game phase')
+            if locate('ingame', 0.9):
+                print('player is now in game')
+                ingame = True
+
 #checking if client is up to date
 getversion = ""
 url = "https://github.com/GTG-coding/League-Auto" #link to github repo
 response = requests.get(url)
 status = response.status_code
 html = BeautifulSoup(str(response.text),"html.parser")
-
 getversion = str(html.find(attrs='Link--primary d-flex no-underline'))
 toggle = False
 content = ""
@@ -134,10 +130,8 @@ for letter in getversion:
         content += " "
         toggle = False
 
-content = content.split()
-content = str(content[3])
-
 getversion = ""
+toggle = False
 
 for letter in content:
     if toggle == True and not letter == '/':
@@ -155,7 +149,6 @@ if getversion == version:
     sameversion = True
 else:
     sameversion = False
-"""
 
 #checking the settings
 toggle = False
@@ -216,12 +209,12 @@ ban = content[5]
 
 #prints
 #version checker bugged fix sometime
-"""
+
 if sameversion == True:
     print(f'Version: {version} | UP TO DATE')
 elif sameversion == False:
     print(f'Version: {version} | OUTDATED, UPDATE AT: {url}')
-"""
+
 print(f'League-Auto | ENJOY | Version: {version}')
 print(' ')
 print('TOGGLES:')
