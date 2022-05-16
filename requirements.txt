@@ -1,9 +1,8 @@
 pyautogui==0.9.52
 keyboard==0.13.5
-pillow==8.2.0
+Pillow==9.1.0
 beautifulsoup4==4.9.3
 requests==2.25.1
 pywin32==301
 opencv-python==4.5.5.64
 PyScreeze==0.1.28
-requests==2.27.1
