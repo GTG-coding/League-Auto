@@ -38,9 +38,9 @@ def ban_pick(ban): #bans picks
             print("Checking for banning phase...")
             if locate('banchamplabel', 0.9) and champclicked == False:
                 print("Banning phase started, finding search bar...")
-                if locate('bansearch2', 0.9):
+                if locate('bansearch', 0.9):
                     print("found searchbar, typing ban choice")
-                    pyautogui.click(locate('bansearch2', 0.9))
+                    pyautogui.click(locate('bansearch', 0.9))
                     pyautogui.write(ban)
                     pyautogui.move(-460,60)
                     time.sleep(0.1)
@@ -65,9 +65,9 @@ def champ_pick(champ1,champ2): #chooses picks
             print("Checking for champ selection phase...")
             if locate('selectchamplabel', 0.9) and champclicked == False:
                 print("Champ selection started, finding search bar...")
-                if locate('champsearch2', 0.9):               #champsearch is transparent, need another image
+                if locate('champsearch', 0.9):               
                     print("Found searchbar, typing champ pick choice..")
-                    pyautogui.click(locate('champsearch2', 0.9))
+                    pyautogui.click(locate('champsearch', 0.9))
                     pyautogui.write(champ1)
                     pyautogui.move(-460,60)
                     time.sleep(0.1)
@@ -87,7 +87,7 @@ def main(autoaccept,autoban,autochamppick,ban,champ1,champ2): #the main function
     
     if autoaccept == True:
         while ingame == False:
-            if locate('inmenu', 0.9) and accepted == True: ##checks to see if player is in menu after accept
+            if locate('inmenu', 0.95) and accepted == True: ##checks to see if player is in menu after accept
                 print('player is back in menu, resetting')
                 accepted = False
                 ingame = False
@@ -186,7 +186,7 @@ if FindWindow(None, 'League of Legends'):
         print(' ')
         print(f'Please change window size in the league client settings to 1600 x 900')
         print(' ')
-        timer = 10
+        timer = 5
         while timer != 0:
             print(f'client will close in {timer}')
             timer -= 1
