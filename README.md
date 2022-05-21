@@ -1,5 +1,6 @@
 # League-Auto
 Automate many things in League of Legends. Including auto accepting games, automatically picking your champion, and automatically banning a champion.
+(Currently only the auto-accept feature is finished)
 
 **USE AT OWN RISK, I HAVE YET TO DISCOVER IF THIS FOLLOWS THE GUIDELINES LEAGUE OF LEGENDS HAS IN PLACE**
 
